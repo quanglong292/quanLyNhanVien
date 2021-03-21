@@ -48,9 +48,9 @@ function capNhat (id) {
 
     isValid &= valid.checkEmpt(ngayLam, getELE("tbNgay"), "Date không được để trống!") && valid.dateFormat(ngayLam, getELE("tbNgay"), "Không hợp lệ");
     
-    isValid &= valid.checkEmpt(luongCB, getELE("tbLuongCB"), "Lương cơ bản không được để trống!") && valid.checkValue(luongCB, getELE("tbLuongCB"), "Sai mức lương cơ bản", 10, 20);
+    isValid &= valid.checkEmpt(luongCB, getELE("tbLuongCB"), "Lương cơ bản không được để trống!") && valid.checkValue(luongCB, getELE("tbLuongCB"), "Sai mức lương cơ bản: 100.000 - 10.000.000VND", 100000, 10000000);
 
-    isValid &= valid.checkEmpt(gioLam, getELE("tbGiolam"), "Giờ làm không được để trống!") && valid.checkLength(gioLam, getELE("tbGiolam"), "Sai mức giờ làm cơ bản", 80, );
+    isValid &= valid.checkEmpt(gioLam, getELE("tbGiolam"), "Giờ làm không được để trống!") && valid.checkValue(gioLam, getELE("tbGiolam"), "Sai mức giờ làm cơ bản", 80, 120);
 
     if (isValid) {
         var nv = new NhanVien (taiKhoan, hoTen, matKhau, email, ngayLam, luongCB, chucVu, gioLam);
@@ -182,7 +182,7 @@ function themNV () {
     
     isValid &= valid.checkEmpt(luongCB, getELE("tbLuongCB"), "Lương cơ bản không được để trống!") && valid.checkValue(luongCB, getELE("tbLuongCB"), "Sai mức lương cơ bản: 100.000 - 10.000.000VND", 100000, 10000000);
 
-    isValid &= valid.checkEmpt(gioLam, getELE("tbGiolam"), "Giờ làm không được để trống!") && valid.checkLength(gioLam, getELE("tbGiolam"), "Sai mức giờ làm cơ bản", 80, null);
+    isValid &= valid.checkEmpt(gioLam, getELE("tbGiolam"), "Giờ làm không được để trống!") && valid.checkValue(gioLam, getELE("tbGiolam"), "Sai mức giờ làm cơ bản", 80, 120);
 
     if (isValid) {
         // đã gọi truyền dữ liệu vào 9 tham số
