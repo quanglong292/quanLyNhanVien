@@ -48,7 +48,7 @@ function capNhat (id) {
 
     isValid &= valid.checkEmpt(ngayLam, getELE("tbNgay"), "Date không được để trống!") && valid.dateFormat(ngayLam, getELE("tbNgay"), "Không hợp lệ");
     
-    isValid &= valid.checkEmpt(luongCB, getELE("tbLuongCB"), "Lương cơ bản không được để trống!") && valid.checkLength(luongCB, getELE("tbLuongCB"), "Sai mức lương cơ bản", 1000000, 20000000);
+    isValid &= valid.checkEmpt(luongCB, getELE("tbLuongCB"), "Lương cơ bản không được để trống!") && valid.checkValue(luongCB, getELE("tbLuongCB"), "Sai mức lương cơ bản", 10, 20);
 
     isValid &= valid.checkEmpt(gioLam, getELE("tbGiolam"), "Giờ làm không được để trống!") && valid.checkLength(gioLam, getELE("tbGiolam"), "Sai mức giờ làm cơ bản", 80, );
 
@@ -128,7 +128,7 @@ function hienThi (mangDS) {
     var content = "";
 
     mangDS.map(function(item){
-        
+        // Loop từng phần từ trong một mảng, có giá trị cần lấy => sẽ lấy hết tất cả giá trị đó trong mỗi mảng xuất lên UI
         content += `
         <tr> 
             <td>${item.taiKhoan}</td>
@@ -159,6 +159,14 @@ function themNV () {
     var luongCB = getELE("luongCB").value;
     var chucVu = getELE("chucvu").value;
     var gioLam = getELE("gioLam").value;
+    // var loaiNV = "";
+            // if (chucVu === "Nhân viên") {
+            //     tongLuong = luongCB;
+            // } else if (chucVu === "Trưởng phòng") {
+            //     tongLuong = luongCB*2;
+            // } else {
+            //     tongLuong = luongCB*3;
+            // };
 
     var isValid = true;
 
@@ -172,16 +180,19 @@ function themNV () {
 
     isValid &= valid.checkEmpt(ngayLam, getELE("tbNgay"), "Date không được để trống!") && valid.dateFormat(ngayLam, getELE("tbNgay"), "Không hợp lệ");
     
-    isValid &= valid.checkEmpt(luongCB, getELE("tbLuongCB"), "Lương cơ bản không được để trống!") && valid.checkLength(luongCB, getELE("tbLuongCB"), "Sai mức lương cơ bản", 1000000, 20000000);
+    isValid &= valid.checkEmpt(luongCB, getELE("tbLuongCB"), "Lương cơ bản không được để trống!") && valid.checkValue(luongCB, getELE("tbLuongCB"), "Sai mức lương cơ bản: 100.000 - 10.000.000VND", 100000, 10000000);
 
-    isValid &= valid.checkEmpt(gioLam, getELE("tbGiolam"), "Giờ làm không được để trống!") && valid.checkLength(gioLam, getELE("tbGiolam"), "Sai mức giờ làm cơ bản", 80, );
+    isValid &= valid.checkEmpt(gioLam, getELE("tbGiolam"), "Giờ làm không được để trống!") && valid.checkLength(gioLam, getELE("tbGiolam"), "Sai mức giờ làm cơ bản", 80, null);
 
     if (isValid) {
-        
+        // đã gọi truyền dữ liệu vào 9 tham số
         var nv = new NhanVien (taiKhoan, hoTen, matKhau, email, ngayLam, luongCB, chucVu, gioLam);
-        
-        nv.tongLuong(nv.chucVu, nv.luongCB);
-        
+        // var tongLuong = nv.tongLuong(nv.chucVu, nv.luongCB);
+        // tham số thứ 10 được gọi riêng vì nó nằm  trong một phương thức cần truyền tham số
+        nv.tongLuong(nv.chucVu, nv.luongCB); // tongLuong được lấy dữ liệu (kết quả của phương thức)
+        // result.data <=> result.nv.tongLuong()
+        // post: đẩy một mảng nv vào dữ liệu JSON
+        // get: lấy tất cả đối tượng trong mảng trả ra kết quả => chạy hàm hiển thị
         nv.phanLoaiNV(gioLam);
         nvService.themNV(nv).then(function(result){
             getDSNV();

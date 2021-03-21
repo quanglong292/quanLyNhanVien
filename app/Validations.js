@@ -11,14 +11,24 @@ function Validation() {
     }
 
     this.checkLength = function(inputVal, spanELE, message, min, max) {
-        if (inputVal.length < min || inputVal.length > max) {
-            spanELE.innerHTML = message;
-            return false;
-        } else {
+        if (inputVal.length >= min && inputVal.length <= max) {
             spanELE.innerHTML = "";
             return true;
+        } else {
+            spanELE.innerHTML = message;
+            return false;
         }
     };
+
+    this.checkValue = (inputVal, spanELE, message, min, max) => {
+        if (inputVal >= min && inputVal <= max) {
+            spanELE.innerHTML = "";
+            return true;
+        } else {
+            spanELE.innerHTML = message;
+            return false;
+        }
+    }
 
     this.checkLetters = function (inputVal, spanELE, message) {
         var letter = new RegExp ("^[a-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶ" + "ẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợ" + "ụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹý\\s]+$");
